@@ -1,8 +1,10 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import styles from "./page.module.css";
+import React, { useEffect, useState } from "react";
 import { TruncatableText } from "react-truncatable-text";
 import { ChangeEvent } from "react/ts5.0";
+import { Checkbox } from "components/checkbox";
+
+import styles from "./page.module.css";
 
 const QUOTES = [
   "“Even the smallest person can change the course of the future.” — Galadriel",
@@ -10,13 +12,14 @@ const QUOTES = [
   "“Your time will come. You will face the same Evil, and you will defeat it.” – Arwen",
   "“If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.” – Thorin Oakenshield",
   "“Do not pity the dead, Harry. Pity the living, and, above all those who live without love. – Albus Dumbledore, Harry Potter and the Deathly Hallows",
-  "“Books! And cleverness! There are more important things — friendship and bravery. – Hermione Granger, Harry Potter and the Sorcerer’s Stone,",
+  "“Books! And cleverness! There are more important things — friendship and bravery. – Hermione Granger, Harry Potter and the Sorcerer’s Stone",
 ];
 
 export default function Home() {
   const [itemsCount, setItemsCount] = useState(1);
   const [input, setInput] = useState("");
   const [quote, setQuote] = useState("");
+  const [isSmartDebounceAvailable, setSmartDebounceAvailable] = useState(false);
 
   useEffect(() => {
     const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
@@ -48,12 +51,21 @@ export default function Home() {
           Change
         </button>
       </div>
+      <div className={styles.group}>
+        <Checkbox
+          label="Turn on the smart debounce"
+          value="smart_debounce"
+          onChange={() => setSmartDebounceAvailable(!isSmartDebounceAvailable)}
+          checked={isSmartDebounceAvailable}
+        />
+      </div>
       {items.map((value, index) => (
         <div className={styles.container} key={index}>
           <TruncatableText
             className={styles.field}
             tailLength={3}
             title="This is title!"
+            debounced={isSmartDebounceAvailable}
           >
             {quote}
           </TruncatableText>
