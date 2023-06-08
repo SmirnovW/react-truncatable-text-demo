@@ -1,95 +1,64 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import React, { useEffect, useMemo, useState } from "react";
+import styles from "./page.module.css";
+import { TruncatableText } from "react-truncatable-text";
+import { ChangeEvent } from "react/ts5.0";
+
+const QUOTES = [
+  "“Even the smallest person can change the course of the future.” — Galadriel",
+  "“You step into the road, and if you don’t keep your feet, there is no knowing where you might be swept off to.” ― J.R.R. Tolkien",
+  "“Your time will come. You will face the same Evil, and you will defeat it.” – Arwen",
+  "“If more of us valued food and cheer and song above hoarded gold, it would be a merrier world.” – Thorin Oakenshield",
+  "“Do not pity the dead, Harry. Pity the living, and, above all those who live without love. – Albus Dumbledore, Harry Potter and the Deathly Hallows",
+  "“Books! And cleverness! There are more important things — friendship and bravery. – Hermione Granger, Harry Potter and the Sorcerer’s Stone,",
+];
 
 export default function Home() {
+  const [itemsCount, setItemsCount] = useState(1);
+  const [input, setInput] = useState("");
+  const [quote, setQuote] = useState("");
+
+  useEffect(() => {
+    const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    setQuote(randomQuote);
+  }, []);
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+
+  const onClick = () => {
+    setItemsCount(Number(input));
+  };
+
+  const items = new Array(itemsCount).fill(1);
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <h2>Feel free to experiment with adjusting the components quantity.</h2>
+      <div className={styles.group}>
+        <input
+          type="text"
+          className={styles.input}
+          onChange={onChange}
+          value={input}
+          placeholder="Components quantity..."
         />
+        <button className={styles.button} onClick={onClick}>
+          Change
+        </button>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {items.map((value, index) => (
+        <div className={styles.container} key={index}>
+          <TruncatableText
+            className={styles.field}
+            tailLength={3}
+            title="This is title!"
+          >
+            {quote}
+          </TruncatableText>
+        </div>
+      ))}
     </main>
-  )
+  );
 }
