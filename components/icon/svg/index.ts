@@ -1,2 +1,2 @@
-export { CheckIcon } from './check-icon';
-export { CloseIcon } from './close-icon';
+export { Check } from "./check-icon";
+export { Close } from "./close-icon";

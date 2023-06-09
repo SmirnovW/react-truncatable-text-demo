@@ -1,46 +1,46 @@
-import React, { HTMLAttributes, PropsWithChildren } from 'react';
-import classNames from 'classnames';
+import React, { HTMLAttributes, PropsWithChildren } from "react";
+import classNames from "classnames";
 
-import styles from './text.module.css';
+import styles from "./text.module.css";
 
-export interface Props extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
-	className?: string;
-	as?: string;
-	weight?: FontWeightType;
-	size?: FontSizesType;
-	color?: ColorType;
+export interface Props extends Omit<HTMLAttributes<HTMLElement>, "color"> {
+  className?: string;
+  as?: string;
+  weight?: FontWeightType;
+  size?: FontSizesType;
+  color?: ColorType;
 }
 
 /**
  * Text Component
  */
 export const Text: React.FC<PropsWithChildren<Props>> = (props) => {
-	const {
-		children,
-		className = '',
-		as = 'div',
-		size = 'medium',
-		color = 'black',
-		weight = 'regular',
-		...restProps
-	} = props;
+  const {
+    children,
+    className = "",
+    as = "div",
+    size = "medium",
+    color = "black",
+    weight = "regular",
+    ...restProps
+  } = props;
 
-	const finalClassName = classNames(
-		className,
-		color,
-		styles[size],
-		styles[weight]
-	);
+  const finalClassName = classNames(
+    className,
+    color,
+    styles[size],
+    styles[weight]
+  );
 
-	return React.createElement(
-		as, //span div button li
-		{
-			...restProps,
-			style: {
-				...props.style,
-			},
-			className: finalClassName,
-		},
-		children
-	);
+  return React.createElement(
+    as, //span div button li
+    {
+      ...restProps,
+      style: {
+        ...props.style,
+      },
+      className: finalClassName,
+    },
+    children
+  );
 };
