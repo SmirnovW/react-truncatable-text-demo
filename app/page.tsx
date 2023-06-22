@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { TruncatableText } from "react-truncatable-text";
-import { ChangeEvent } from "react/ts5.0";
 import { Checkbox } from "components/checkbox";
 
 import styles from "./page.module.css";
@@ -66,6 +65,7 @@ export default function Home() {
             tailLength={3}
             title="This is title!"
             debounced={isSmartDebounceAvailable}
+            searchable
           >
             {quote}
           </TruncatableText>
